@@ -28,7 +28,7 @@ express()
 	.use(bodyParser.urlencoded({ extended: true }))
 	.post('/demo', function(req, res) {
 		console.log(req.body);
-		res.send();
+		res.status(200).send(req.body);
 		//var user_id = req.body.id;
 		//var token = req.body.token;
 		//var geo = req.body.geo;
