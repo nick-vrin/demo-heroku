@@ -9,7 +9,7 @@ page.open(server, 'post', data, function (status) {
     if (status !== 'success') {
         console.log('Unable to post!');
     } else {
-        console.log(page.content);
+        console.log(page.plainText);
     }
     phantom.exit();
 });
