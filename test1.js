@@ -2,8 +2,8 @@
 
 "use strict";
 var page = require('webpage').create(),
-    server = 'http://posttestserver.com/post.php?dump',
-    data = 'universe=expanding&answer=42';
+    server = 'http://vrinsoft.in/emsat/admin/api/login.php?',
+    data = 'email=hitesh.vrinsoft@gmail.com&password=12345678&is_phone=1&device_token=XYZ';
 
 page.open(server, 'post', data, function (status) {
     if (status !== 'success') {
