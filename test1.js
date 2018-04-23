@@ -1,17 +1,15 @@
-phantom.addCookie ({ 
-   name: 'c1', 
-   value: '1', 
-   domain: 'localhost' 
-}); 
-phantom.addCookie ({ 
-   name: 'c2', 
-   value: '2', 
-   domain: 'localhost' 
-}); 
-phantom.addCookie ({ 
-   name: 'c3', 
-   value: '3', 
-   domain: 'localhost' 
-}); 
-console.log(JSON.stringify(phantom.cookies)); 
-phantom.exit();
+// Example using HTTP POST operation
+
+"use strict";
+var page = require('webpage').create(),
+    server = 'http://posttestserver.com/post.php?dump',
+    data = 'universe=expanding&answer=42';
+
+page.open(server, 'post', data, function (status) {
+    if (status !== 'success') {
+        console.log('Unable to post!');
+    } else {
+        console.log(page.content);
+    }
+    phantom.exit();
+});
