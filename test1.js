@@ -2,7 +2,7 @@
 
 "use strict";
 var page = require('webpage').create(),
-    server = 'https://requestbin.fullcontact.com/1o3t31p1?inspect',
+    server = 'http://localhost:5000/demo',
     data = '';//email=hitesh.vrinsoft@gmail.com&password=12345678&is_phone=1&device_token=XYZ
 
 page.open(server, 'post', data, function (status) {
