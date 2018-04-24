@@ -1,4 +1,4 @@
-const cool = require('cool-ascii-faces')
+//const cool = require('cool-ascii-faces')
 const express = require('express')
 const path = require('path')
 var test = require('./demo');
@@ -7,13 +7,13 @@ var app = express();
 
 //
 var bodyParser = require('body-parser');
-var hbs = exphbs.create({
-    // Specify helpers which are only registered on this instance.
-    helpers: {
-        foo: function () { return 'FOO!'; },
-        bar: function () { return 'BAR!'; }
-    }
-});
+// var hbs = exphbs.create({
+//     // Specify helpers which are only registered on this instance.
+//     helpers: {
+//         foo: function () { return 'FOO!'; },
+//         bar: function () { return 'BAR!'; }
+//     }
+// });
 
 //
 const PORT = process.env.PORT || 5000
@@ -21,11 +21,11 @@ const PORT = process.env.PORT || 5000
 express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
-  .engine('handlebars', hbs.engine)
-  .set('view engine', 'handlebars')
-  //.set('view engine', 'ejs')
+  //.engine('handlebars', hbs.engine)
+  //.set('view engine', 'handlebars')
+  .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-  .get('/cool', (req, res) => res.send(cool()))
+  //.get('/cool', (req, res) => res.send(cool()))
   //.get('/demo', function(req, res) {
 	  //var user_id = req.param('id');
 	 // var token = req.param('token');
@@ -35,10 +35,38 @@ express()
 	//})
 	.use(bodyParser.json())
 	.use(bodyParser.urlencoded({ extended: true }))
-	.get('/demo', function(req, res) {
-		console.log(req.query)
-    res.render('pages/index',{data : JSON.stringify(req.query)});
-		//res.status(200).send(req.query);
+	.post('/demo', function(req, res) {
+		//console.log(req.body)
+    //console.log(req.query);
+    var y = [];
+    var x = req.body;
+    x = Object.values(x);
+    for(var i = 0;i< x.length;i++){
+      var z = x[i].replace(/"/g, '');
+      z = z.replace(/,/g,'');
+      //console.log(z);
+      y.push(z);
+    }
+    console.log(y);
+    //console.log(x[0]);
+    //x = JSON.stringify(x);
+    //console.log(x);
+    //x = object.values(x);
+
+    //x = JSON.stringify(x);
+    //console.log(x);
+    //x=x.replace(/"/g, '');
+    //x=x.replace(/\\/g, '"');
+    //x=x.replace(/,,/g,",")
+    res.status(200).send(x);
+    //console.log(JSON.parse(x));
+    //console.log(x);
+    //console.log(x);
+    //x = x.replace("\\"," ");
+    //x = x.replace("\"\"", "\"");
+    //console.log(x);
+    //res.render('pages/index',{data : x});
+		//res.send(200);
 		//test.test(req.query);
 		//var user_id = req.body.id;
 		//var token = req.body.token;
