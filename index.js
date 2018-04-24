@@ -36,9 +36,9 @@ express()
 	.use(bodyParser.json())
 	.use(bodyParser.urlencoded({ extended: true }))
 	.get('/demo', function(req, res) {
-		console.log(escape(req.body))
+		console.log(req.query)
     res.render('pages/index',{data : JSON.stringify(req.query)});
-		res.status(200).send(req.query);
+		//res.status(200).send(req.query);
 		//test.test(req.query);
 		//var user_id = req.body.id;
 		//var token = req.body.token;
