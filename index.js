@@ -1,12 +1,19 @@
 const cool = require('cool-ascii-faces')
 const express = require('express')
 const path = require('path')
-//var test = require('./demo');
+var test = require('./demo');
+var exphbs  = require('express-handlebars');
 var app = express();
 
 //
-
 var bodyParser = require('body-parser');
+var hbs = exphbs.create({
+    // Specify helpers which are only registered on this instance.
+    helpers: {
+        foo: function () { return 'FOO!'; },
+        bar: function () { return 'BAR!'; }
+    }
+});
 
 //
 const PORT = process.env.PORT || 5000
@@ -14,7 +21,9 @@ const PORT = process.env.PORT || 5000
 express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
+  .engine('handlebars', hbs.engine)
+  .set('view engine', 'handlebars')
+  //.set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/cool', (req, res) => res.send(cool()))
   //.get('/demo', function(req, res) {
@@ -26,9 +35,11 @@ express()
 	//})
 	.use(bodyParser.json())
 	.use(bodyParser.urlencoded({ extended: true }))
-	.post('/demo', function(req, res) {
-		console.log(req.body);
-		res.status(200).send(req.body);
+	.get('/demo', function(req, res) {
+		console.log(escape(req.body))
+    res.render('pages/index',{data : JSON.stringify(req.query)});
+		res.status(200).send(req.query);
+		//test.test(req.query);
 		//var user_id = req.body.id;
 		//var token = req.body.token;
 		//var geo = req.body.geo;
@@ -38,6 +49,8 @@ express()
   //.get('/demo', (req, res) => testing(req,res))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
   function testing(req,res){
+  res.end(JSON.stringify(req.query, null, 2))
+		res.status(200)
   //res.setHeader('Content-Type', 'text/plain')
   //res.write('you posted:\n')
   //res.end(JSON.stringify(req.body, null, 2))
